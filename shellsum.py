@@ -10,7 +10,7 @@ def get_banner():
 	'''
 	This function be used to print "Shellsum" banner
 	'''
-	print '''                                                                                
+	print('''                                                                                
          _      _ _                     
  ___  __| |___ | | |___ _   _  ___ __ _ 
 |__ \/ _` / _ \| | |__ | | | |/ _ ' _` |
@@ -18,11 +18,12 @@ def get_banner():
 \___|_| |_|___/|_|_\___|_.__/|_| |_| |_|
                                           
     Shellsum.py - Author: ManhNho
+    re-written tp python3 by XziimP
     A defense tool - detect web shells in local system via md5sum
     Usage:
     	python shellsum.py
     	Input website directory > /var/www/html/
-	'''
+	''')
 
 def check_dir(target):
 	'''
@@ -31,7 +32,7 @@ def check_dir(target):
 	if os.path.isdir(target):
 		pass
 	else:
-		print "Please recheck input directory!"
+		print("Please recheck input directory!")
 		sys.exit(0)
 
 def generate_md5sum(filename):
@@ -52,22 +53,22 @@ def compare_hashes(origin_hashes, shell_hashes):
 	'''Compare generated values with shell hashes'''
 	result = set(origin_hashes.keys()) & set(shell_hashes.keys())
 	if result == set([]):
-		print "="*63
-		print "[+] Congratulation, not detect any web shells in 'sauces' code."
-		print "="*63
+		print("="*63)
+		print("[+] Congratulation, not detect any web shells in 'sauces' code.")
+		print("="*63)
 	else:
-		print "="*15
-		print "[+] Found shell!"
-		print "="*15
+		print("="*15)
+		print("[+] Aww shit shell found!")
+		print("="*15)
 		table = PrettyTable(['ID', 'Original file', 'Shell reference file', 'md5sum'])
 		for i in range(0, len(result)):
 			detected_hash = result.pop()
 			table.add_row([i+1, origin_hashes[detected_hash], shell_hashes[detected_hash], detected_hash])
-		print table
+		print(table)
 
 def main():
 	get_banner()
-	target = raw_input("Input website directory > ")
+	target = input("Input website directory > ")
 	check_dir(target) 
 	origin_hashes = get_origin_hashes(target)
 	try:
